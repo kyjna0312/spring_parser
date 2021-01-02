@@ -1,0 +1,35 @@
+{
+    "$schema": "https://json-schema.org/draft/2019-09/schema#",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "required": [
+        "Entity",
+        "interval",
+        "Description",
+        "City"
+    ],
+    "properties": {
+		"Entity": {
+			"type": "string"
+		},
+		"interval": {
+			"type": "string"
+		},
+		"Description": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"properties": {
+					"name":{
+						"type": "string"
+					},
+					"equation": {
+						"type": "number"
+					}
+				}
+			}
+		},
+		
+		"City": {"$ref": "#/properties/Description"}
+	}
+}

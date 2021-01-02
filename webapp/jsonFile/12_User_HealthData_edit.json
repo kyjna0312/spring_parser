@@ -1,0 +1,174 @@
+{
+    "Entity" : "User_HealthData",
+    "interval" : "100ms",
+    "Description" : {
+        "access" : {
+            "currentLocation" : "TestLocation",
+            "actionEnabled" : "True",
+            "subPropertyOf" : "Things, Device",
+            "superPropertyOf" : "UserData",
+            "connectionType" : "IPv4",
+            "discoverable" : "True",
+            "targetIPv4" : "192.168.15.102",
+            "hasInterface" : "True"
+        },
+        "common" : {
+            "thingsType" : "dataInfo"
+        },
+        "dataInfo" : {
+            "dataFunctionName" : [
+                "ActivityReport"
+            ],
+            "dataFunctionID" : [
+                "State_User_HealthData"
+            ],
+            "dataFunctionParam" : {
+                "Func1" : [
+                    "Null"
+                ]
+            },
+            "dataFunctionReturn" : {
+                "Func1" : [
+                    "Null"
+                ]
+            }
+        }
+    },
+    "DataFormat" : {
+        "valueLength" : "1",
+        "type" : "simpleType",
+        "hasType" : {
+            "valueType" : [
+                {
+                    "description" : "State_User_HealthData",
+                    "name" : "ActivityReport",
+                    "dataType" : "Int",
+                    "valueField" : "value",
+                    "valueRange" : [
+                        "0",
+                        "300"
+                    ]
+                }
+            ]
+        }
+    },
+    "Transform" : {
+        "valueType" : {
+            "collectorModel" : {
+                "Collctor_ID" : "Collector_User_HealthData",
+                "overrideDaataFormat" : "false",
+                "type" : "simpleType",
+                "length" : "1"
+            },
+            "hasType" : {
+                "valueType" : [
+                    {
+                        "description" : "State_User_HealthData",
+                        "name" : "ActivityReport",
+                        "dataType" : "Int",
+                        "valueField" : "value",
+                        "valueRange" : [
+                            "0",
+                            "300"
+                        ]
+                    }
+                ]
+            }
+        },
+        "basisValue" : {
+            "convertingModel" : {
+                "converting_ID" : "Converting_User_HealthData",
+                "overrideDaataFormat" : "false",
+                "type" : "simpleType",
+                "length" : "1"
+            },
+            "hasType" : {
+                "valueType" : [
+                    {
+                        "description" : "State_User_HealthData",
+                        "name" : "ActivityReport",
+                        "dataType" : "Int",
+                        "valueField" : "value",
+                        "valueRange" : [
+                            "0",
+                            "300"
+                        ]
+                    }
+                ]
+            },
+            "lowlevelContext" : [
+                {
+                    "name" : "ActivityReport",
+                    "equation" : "value",
+                    "targetValue" : "returnValue",
+                    "operator" : "GreaterThan",
+                    "resultMapping" : "True"
+                },
+                {
+                    "name" : "ActivityReport",
+                    "equation" : "value",
+                    "targetValue" : "returnValue",
+                    "operator" : "LessThan",
+                    "resultMapping" : "True"
+                }
+            ],
+            "highlevelContext" : [
+                {
+                    "name" : "ActivityReport",
+                    "equation" : "returnValue > 150",
+                    "resultMapping" : {
+                        "trueValue" : "Daily_Exercise_OK"
+                    }
+                },
+                {
+                    "name" : "ActivityReport",
+                    "equation" : "returnValue < 151",
+                    "resultMapping" : {
+                        "trueValue" : "Daily_Exercise_EMPTY",
+                        "falseValue" : "Daily_Exercise_NOT_ENOUGH"
+                    }
+                }
+            ]
+        },
+        "gatherValue" : {
+            "transformModel" : {
+                "transform_ID" : "Transform_User_HealthData"
+            },
+            "lowlevelContext" : [
+                {
+                    "name" : "ActivityReport",
+                    "equation" : "value",
+                    "targetValue" : "180",
+                    "operator" : "GreaterThan",
+                    "resultMapping" : "Daily_Exercise_OK"
+                },
+                {
+                    "name" : "ActivityReport",
+                    "equation" : "value",
+                    "targetValue" : "10",
+                    "operator" : "LessThan",
+                    "resultMapping" : "Daily_Exercise_EMPTY"
+                }
+            ],
+            "highlevelContext" : [
+                {
+                    "name" : "ActivityReport",
+                    "equation" : "180 > 150",
+                    "resultMapping" : {
+                        "trueValue" : "Daily_Exercise_OK"
+                    },
+                    "result" : "Daily_Exercise_OK"
+                },
+                {
+                    "name" : "ActivityReport",
+                    "equation" : "10 < 150",
+                    "resultMapping" : {
+                        "trueValue" : "Daily_Exercise_EMPTY",
+                        "falseValue" : "Daily_Exercise_NOT_ENOUGH"
+                    },
+                    "Result" : "Daily_Exercise_EMPTY"
+                }
+            ]
+        }
+    }
+}

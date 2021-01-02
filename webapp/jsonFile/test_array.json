@@ -1,0 +1,21 @@
+{
+	"Entity": "Test",
+    "interval": "100ms",
+	"Description": [
+		{
+			"name": "hello",
+			"equation": 0
+		}
+	],
+	"City":[
+		{
+			"name": "hello",
+			"equation": 1
+		},
+		{
+			"name": "hello2",
+			"equation": 1
+		}
+	]
+	
+}

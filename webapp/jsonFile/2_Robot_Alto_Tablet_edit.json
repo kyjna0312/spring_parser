@@ -1,0 +1,166 @@
+{
+    "Entity" : "Robot_Alto_Tablet",
+    "interval" : "100ms",
+    "Description" : {
+        "access" : {
+            "currentLocation" : "TestLocation",
+            "actionEnabled" : "True",
+            "subPropertyOf" : "Things, Device",
+            "superPropertyOf" : "RobotDevice",
+            "connectionType" : "IPv4",
+            "discoverable" : "True",
+            "targetIPv4" : "192.168.15.101",
+            "hasInterface" : "True"
+        },
+        "common" : {
+            "deviceID" : "Yujin_Robot_Test_Alto_Tablet",
+            "productName" : "Samsung_Galaxy_Tab",
+            "manufacturer" : "Samsung",
+            "deviceVersion" : "1.0.0",
+            "firmwareVersion" : "1.0.0",
+            "thingsType" : "Tablet"
+        },
+        "robot" : {
+            "robotFeature" : [ 
+                "Button_State"
+            ],
+            "robotFeatureID" : [ 
+                "State_Robot_Alto_Tablet"
+            ],
+            "robotFeatureIDparam" : {
+                "Func1" : [ 
+                    "Null"
+                ]
+            },
+            "robotFeatureReturn" : {
+                "Func1" : [ 
+                    "Int"
+                ]
+            }
+        }
+    },
+    "DataFormat" : {
+        "valueLength" : "1",
+        "_type" : "simpleType",
+        "hasType" : {
+            "valueType" : [
+                {
+                    "description" : "State_Robot_Alto_Tablet",
+                    "name" : "Button_State",
+                    "valueField" : "value",
+                    "dataType" : "Int",
+                    "valueRange" : [ 
+                        "0", 
+                        "1"
+                    ]
+                }
+            ]
+        }
+    },
+    "Transform" : {
+        "valueType" : {
+            "collectorModel" : {
+                "Collectpr_ID" : "Collector_Robot_Alto_Tablet",
+                "overrideDataFormat" : "false",
+                "type" : "simpleType",
+                "length" : "1"
+            },
+            "hasType" : {
+                "valueType" : [
+                    {
+                        "description" : "State_Robot_Alto_Tablet",
+                        "name" : "Button_State",
+                        "valueField" : "value",
+                        "dataType" : "Int",
+                        "valueRange" : [ 
+                            "0", 
+                            "1"
+                        ]
+                    }
+                ]
+            }
+        },
+        "basisValue" : {
+            "convertingModel" : {
+                "converting_ID" : "Converting_Robot_Alto_Tablet",
+                "overrideDataFormat" : "False",
+                "type" : "simpleType",
+                "length" : "1"
+            },
+            "hasType" : {
+                "valueType" : [
+                    {
+                        "description" : "State_Robot_Alto_Tablet",
+                        "name" : "Button_State",
+                        "valueField" : "value",
+                        "dataType" : "Int",
+                        "valueRange" : [ 
+                            "0", 
+                            "1"
+                        ]
+                    }
+                ]
+            },
+            "lowlevelContext" : [
+                {
+                    "name" : "Button_State",
+                    "equation" : "value",
+                    "targetValue" : "returnValue",
+                    "operator" : "EqualsTo",
+                    "resultMapping" : "True"
+                }
+            ],
+            "highlevelContext" : [
+                {
+                    "name" : "Button_State",
+                    "equation" : "returnValue == 0",
+                    "resultMapping" : {
+                        "trueValue" : "ComebakBtn_Pressed",
+                        "falseValue" : "StayBtn_Pressed"
+                    }
+                }
+            ]
+        },
+        "gatherValue" : {
+            "transformModel" : {
+                "transform_ID" : "Transform_Robot_Alto_Tablet"
+            },
+            "lowlevelContext" : [
+                {
+                    "name" : "Button_State",
+                    "equation" : "value",
+                    "targetValue" : "1",
+                    "operator" : "EqualsTo",
+                    "resultMapping" : "ComebackBtn_Pressed"
+                }, 
+                {
+                    "name" : "Button_State",
+                    "equation" : "value",
+                    "targetValue" : "0",
+                    "operator" : "EqualsTo",
+                    "resultMapping" : "StayBtn_Pressed"
+                }
+            ],
+            "highlevelContext" : [
+                {
+                    "name" : "Button_State",
+                    "equation" : "1 == 0",
+                    "resultMapping" : {
+                        "trueValue" : "ComebakBtn_Pressed",
+                        "falseValue" : "StayBtn_Pressed"
+                    },
+                    "Result" : "ComebakBtn_Pressed"
+                },
+                {
+                    "name" : "Button_State",
+                    "equation" : "0 == 0",
+                    "resultMapping" : {
+                        "trueValue" : "ComebakBtn_Pressed",
+                        "falseValue" : "StayBtn_Pressed"
+                    },
+                    "Result" : "StayBtn_Pressed"
+                }
+            ]
+        }
+    }
+}

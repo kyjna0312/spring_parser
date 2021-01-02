@@ -1,0 +1,251 @@
+{
+    "Entity" : "Robot_Turtlebot",
+    "interval" : "100ms",
+    "Description" : {
+        "access" : {
+            "currentLocation" : "TestLocation",
+            "actionEnabled" : "True",
+            "subPropertyOf" : "Things, Device",
+            "superPropertyOf" : "RobotDevice",
+            "connectionType" : "IPv4",
+            "discoverable" : "True",
+            "targetIPv4" : "192.168.15.152",
+            "hasInterface" : "True"
+        },
+        "common" : {
+            "deviceID" : "Turtlebot3",
+            "productName" : "Turtlebot",
+            "manufacturer" : "Robotis",
+            "deviceVersion" : "1.0.0",
+            "firmwareVersion" : "1.0.0",
+            "thingsType" : "Robot"
+        },
+        "robot" : {
+            "robotFeature" : [ 
+                "Echo_State", 
+                "Position_State"
+            ],
+            "robotFeatureID" : [ 
+                "State_Robot_Turtlebot_State", 
+                "State_Robot_Turtlebot_Position"
+            ],
+            "robotFeatureIDparam" : {
+                "Func1" : [ 
+                    "Null"
+                ],
+                "Func2" : [ 
+                    "Null"
+                ]
+            },
+            "robotFeatureReturn" : {
+                "Func1" : [ 
+                    "Int"
+                ],
+                "Func2" : [ 
+                    "Int"
+                ]
+            }
+        }
+    },
+    "DataFormat" : {
+        "valueLength" : "2",
+        "type" : "complexType",
+        "hasType" : {
+            "length" : "2",
+            "valueType" : [
+                {
+                    "description" : "State_Robot_Turtlebot_State",
+                    "name" : "Echo_State",
+                    "dataType" : "Int",
+                    "valueField" : "value",
+                    "valueRange" : [ 
+                        "0", 
+                        "10"
+                    ]
+                }, 
+                {
+                    "description" : "State_Robot_Turtlebot_Position",
+                    "name" : "Position_State",
+                    "dataType" : "Int",
+                    "valueField" : "value",
+                    "valueRange" : [ 
+                        "0", 
+                        "10"
+                    ]
+                }
+            ]
+        }
+    },
+    "Transform" : {
+        "valueType" : {
+            "collectorModel" : {
+                "Collector_ID" : "Collector_Robot_Turtlebot",
+                "overrideDataFormat" : "false",
+                "type" : "complexType",
+                "length" : "2"
+            },
+            "hasType" : {
+                "length" : "2",
+                "valueType" : [
+                    {
+                        "description" : "State_Robot_Turtlebot_State",
+                        "name" : "Echo_State",
+                        "dataType" : "Int",
+                        "valueField" : "value",
+                        "valueRange" : [ 
+                            "0", 
+                            "10"
+                        ]
+                    },
+                    {
+                        "description" : "State_Robot_Turtlebot_Position",
+                        "name" : "Position_State",
+                        "dataType" : "Int",
+                        "valueField" : "value",
+                        "valueRange" : [ 
+                            "0", 
+                            "10"
+                        ]
+                    }
+                ]
+            }
+        },
+        "basisValue" : {
+            "convertingModel" : {
+                "converting_ID" : "Converting_Robot_Alto",
+                "overrideDataFormat" : "false",
+                "_type" : "complexType",
+                "length" : "2"
+            },
+            "hasType" : {
+                "length" : "2",
+                "valueType" : [
+                    {
+                        "description" : "State_Robot_Turtlebot_State",
+                        "name" : "Echo_State",
+                        "dataType" : "Int",
+                        "valueField" : "value",
+                        "valueRange" : [ 
+                            "0", 
+                            "10"
+                        ]
+                    }, 
+                    {
+                        "description" : "State_Robot_Turtlebot_Position",
+                        "name" : "Position_State",
+                        "dataType" : "Int",
+                        "valueField" : "value",
+                        "valueRange" : [ 
+                            "0", 
+                            "10"
+                        ]
+                    }
+                ]
+            },
+            "lowlevelContext" : [
+                {
+                    "name" : "Echo_State",
+                    "equation" : "value",
+                    "targetValue" : "returnValue",
+                    "operator" : "EqualsTo",
+                    "resultMapping" : "True"
+                },
+                {
+                    "name" : "Position_State",
+                    "equation" : "value",
+                    "targetValue" : "returnValue",
+                    "operator" : "EqualsTo",
+                    "resultMapping" : "True"
+                }
+            ],
+            "highlevelContext" : [
+                {
+                    "name" : "Echo_State",
+                    "equation" : "returnValue == 1",
+                    "resultMapping" : {
+                        "trueValue" : "State_READY"
+                    }
+                },
+                {
+                    "name" : "Echo_State",
+                    "equation" : "returnValue == 2",
+                    "resultMapping" : {
+                        "trueValue" : "State_MOVING"
+                    }
+                },
+                {
+                    "name" : "Echo_State",
+                    "equation" : "returnValue == 3",
+                    "resultMapping" : {
+                        "trueValue" : "State_TOHOME"
+                    }
+                },
+                {
+                    "name" : "Echo_State",
+                    "equation" : "returnValue == 4",
+                    "resultMapping" : {
+                        "trueValue" : "State_DELIVERY"
+                    }
+                },
+                {
+                    "name" : "Position_State",
+                    "equation" : "returnValue == 0",
+                    "resultMapping" : {
+                        "trueValue" : "Position_HOME"
+                    }
+                },
+                {
+                    "name" : "Position_State",
+                    "equation" : "returnValue == 1",
+                    "resultMapping" : {
+                        "trueValue" : "Position_POINT1"
+                    }
+                },
+                {
+                    "name" : "Position_State",
+                    "equation" : "returnValue == 2",
+                    "resultMapping" : {
+                        "trueValue" : "Position_POINT2"
+                    }
+                },
+                {
+                    "name" : "Position_State",
+                    "equation" : "returnValue == 3",
+                    "resultMapping" : {
+                        "trueValue" : "Position_POINT3"
+                    }
+                },
+                {
+                    "name" : "Position_State",
+                    "equation" : "returnValue == 4",
+                    "resultMapping" : {
+                        "trueValue" : "Position_POINT4"
+                    }
+                }
+            ]
+        },
+        "gatherValue" : {
+            "transformModel" : {
+                "transform_ID": "Transform_Robot_Turtlebot"
+            },
+            "lowlevelContext" : [
+                {
+                    "name" : "Echo_State",
+                    "equation" : "value",
+                    "targetValue" : "equalsTo",
+                    "resultMapping" : "State_READY"
+                }
+            ],
+            "highlevelContext" : [
+                {
+                    "name" : "Echo_State",
+                    "equation" : "returnValue == 1",
+                    "resultMapping" : {
+                        "trueValue" : "State_READY"
+                    },
+                    "result" : "State_READY"
+                }
+            ]
+        }
+    }
+}

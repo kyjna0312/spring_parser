@@ -1,0 +1,167 @@
+{
+    "Entity" : "Robot_Turtlebot_Serving",
+    "interval" : "500ms",
+    "Description" : {
+        "access" : {
+            "currentLocation" : "TestLocation",
+            "actionEnabled" : "True",
+            "subPropertyOf" : "Things, Device",
+            "superPropertyOf" : "RobotDevice",
+            "connectionType" : "IPv4",
+            "discoverable" : "True",
+            "targetIPv4" : "192.168.0.103",
+            "hasInterface" : "True"
+        },
+        "common" : {
+            "deviceID" : "Turtlebot_Serving",
+            "productName" : "Serving_Plate",
+            "manufacturer" : "SSLAB",
+            "deviceVersion" : "1.0.0",
+            "firmwareVersion" : "1.0.0",
+            "thingsType" : "dataInfo"
+        },
+        "dataInfo" : {
+            "dataFunctionName" : [
+                "Serving_State"
+            ],
+            "dataFunctionID" : [
+                "State_Robot_Turtlebot_Serving"
+            ],
+            "dataFunctionParam" : {
+                "Func1" : [
+                    "Robot_Turtlebot_IRSensor1",
+                    "Robot_Turtlebot_IRSensor2",
+                    "Robot_Turtlebot_IRSensor3",
+                    "Robot_Turtlebot_IRSensor4"
+                ]
+            },
+            "dataFunctionReturn" : {
+                "Func1" : [
+                    "Int"
+                ]
+            }
+        }
+    },
+    "DataFormat" : {
+        "valueLength" : "1",
+        "type" : "simpleType",
+        "hasType" : {
+            "valueType" :[
+                {
+                    "description" : "State_Robot_Turtlebot_Serving",
+                    "name" : "Serving_State",
+                    "valueField" : "value",
+                    "dataType" : "Int",
+                    "valueRange" : [
+                        "0",
+                        "6"
+                    ]
+                }
+            ]
+        }
+    },
+    "Transform" : {
+        "valueType" : {
+            "collecotrModel" : {
+                "Collector_ID" : "Collector_Robot_Turtlebot_Serving",
+                "overrideDataFormat" : "false",
+                "type" : "simpleType",
+                "length" : "1"
+            },
+            "hasType" : {
+                "valueType": [
+                    {
+                        "description" : "State_Robot_Turtlebot_Serving",
+                        "name" : "Serving_State",
+                        "dataType" : "Int",
+                        "valueField" : "value",
+                        "valueRange" : [
+                            "0",
+                            "6"
+                        ]
+                    }
+                ]
+            }
+        },
+        "basisValue" : {
+            "convertingModel" : {
+                "converting_ID" : "Converting_Robot_Turtlebot_Serving",
+                "overrideDataFormat" : "false",
+                "type" : "simpleType",
+                "length" : "1"
+            },
+            "hasType" : {
+                "valueType" : [
+                    {
+                        "description" : "State_Robot_Turtlebot_Serving",
+                        "name" : "Serving_State",
+                        "dataType" : "Int",
+                        "valueField" : "value",
+                        "valueRange" : [
+                            "0",
+                            "6"
+                        ]
+                    }
+                ]
+            },
+            "lowlevelContext" : [
+                {
+                    "name" : "Serving_State",
+                    "equation" : "value",
+                    "targetValue" : "returnValue",
+                    "operator" : "EqualsTo",
+                    "resultMapping" : "True"
+                }
+            ],
+            "highlevelContext" : [
+                {
+                    "name" : "Serving_State",
+                    "equation" : "returnValue == 0",
+                    "resultMapping" : {
+                        "trueValue" : "SERVING_EMPTY"
+                    }
+                },
+                {
+                    "name" : "Serving_State",
+                    "equation" : "returnValue == 1",
+                    "resultMapping" : {
+                        "trueValue" : "SERVING_READY",
+                        "falseValue" : "SERVING_TAKEN"
+                    }
+                },
+                {
+                    "name" : "Serving_State",
+                    "equation" : "returnValue == 2",
+                    "resultMapping" : {
+                        "trueValue" : "SERVING_TAKEN"
+                    }
+                }
+            ]
+        },
+        "gatherValue" : {
+            "transformModel" : {
+                "transform_ID" : "Transform_Robot_Turtlebot_Serving"
+            },
+            "lowlevelContext" : [
+                {
+                    "name" : "Serving_State",
+                    "equation" : "value",
+                    "targetValue" : "0",
+                    "operator" : "EqualsTo",
+                    "resultMapping" : "SERVING_EMPTY"
+                }
+
+            ],
+            "highlevelContext" : [
+                {
+                    "name" : "Serving_State",
+                    "equation" : "0 == 0",
+                    "resultMapping" : {
+                        "trueValue" : "SERVING_EMPTY"
+                    },
+                    "Result" : "SERVING_EMPTY"
+                } 
+            ]
+        }
+    }
+}

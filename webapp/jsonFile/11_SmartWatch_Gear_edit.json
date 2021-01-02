@@ -1,0 +1,203 @@
+{
+    "Entity" : "SmartWatch_Gear",
+    "interval" : "100ms",
+    "Description" : {
+        "access" : {
+            "currentLocation" : "TestLocation",
+            "actionEnabled" : "True",
+            "subPropertyOf" : "Things, Device",
+            "superPropertyOf" : "WearableDevice",
+            "connectionType" : "IPv4",
+            "discoverable" : "True",
+            "targetIPv4" : "192.168.0.104",
+            "hasInterface" : "True"
+        },
+        "common" : {
+            "deviceID" : "Gear1",
+            "productName" : "Samsung_Galaxy_Gear2",
+            "manufacturer" : "Samsung",
+            "deviceVersion" : "1.0.0",
+            "firmwareVersion" : "1.0.0",
+            "thingsType" : "dataInfo"
+        },
+        "dataInfo" : {
+            "dataFunctionName" : [ 
+                "Signal_Alto", 
+                "Signal_Turtlebot"
+            ],
+            "dataFunctionID" : [ 
+                "State_SmartWatch_Gear_Alto", 
+                "State_SmartWatch_Gear_Turtlebot"
+            ],
+            "dataFunctionParam" : {
+                "Func1" : [ 
+                    "Null"
+                ],
+                "Func2" : [ 
+                    "Null"
+                ]
+            },
+            "dataFunctionReturn" : {
+                "Func1" : [ 
+                    "Null"
+                ],
+                "Func2" : [ 
+                    "Null"
+                ]
+            }
+        }
+    },
+    "DataFormat" : {
+        "valueLength" : "2",
+        "type" : "complexType",
+        "hasType" : {
+            "length" : "2",
+            "valueType" : [
+                {
+                    "description" : "State_SmartWatch_Gear_Alto",
+                    "name" : "Signal_Alto",
+                    "valueField" : "value",
+                    "dataType" : "Int",
+                    "valueRange" : [ 
+                        "0", 
+                        "10"
+                    ]
+                }, 
+                {
+                    "description" : "State_SmartWatch_Gear_Turtlebot",
+                    "name" : "Signal_Turtlebot",
+                    "valueField" : "value",
+                    "dataType" : "Int",
+                    "valueRange" : [ 
+                        "0", 
+                        "10"
+                    ]
+                }
+            ]
+        }
+    },
+    "Transform" : {
+        "valueType" : {
+            "collectorModel" : {
+                "Collector_ID" : "Collector_SmartWatch_Gear",
+                "overrideDataFormat" : "false",
+                "type" : "complexType",
+                "length" : "2"
+            },
+            "hasType" : {
+                "length" : "2",
+                "valueType" : [
+                    {
+                        "description" : "State_SmartWatch_Gear_Alto",
+                        "name" : "Signal_Alto",
+                        "dataType" : "Int",
+                        "valueField" : "value",
+                        "valueRange" : [ 
+                            "0", 
+                            "10"
+                        ]
+                    }, 
+                    {
+                        "description" : "State_SmartWatch_Gear_Turtlebot",
+                        "name" : "Signal_Turtlebot",
+                        "dataType" : "Int",
+                        "valueField" : "value",
+                        "valueRange" : [ 
+                            "0", 
+                            "10"
+                        ]
+                    }
+                ]
+            }
+        },
+        "basisValue" : {
+            "convertingModel" : {
+                "converting_ID" : "Converting_SmartWatch_Gear",
+                "overrideDataFormat" : "false",
+                "type" : "complexType",
+                "length" : "2"
+            },
+            "hasType" : {
+                "length" : "2",
+                "valueType" : [
+                    {
+                        "description" : "State_SmartWatch_Gear_Alto",
+                        "name" : "Signal_Alto",
+                        "dataType" : "Int",
+                        "valueField" : "value",
+                        "valueRange" : [ 
+                            "0", 
+                            "10"
+                        ]
+                    }, 
+                    {
+                        "description" : "State_SmartWatch_Gear_Turtlebot",
+                        "name" : "Signal_Turtlebot",
+                        "dataType" : "Int",
+                        "valueField" : "value",
+                        "valueRange" : [ 
+                            "0", 
+                            "10"
+                        ]
+                    }
+                ]
+            },
+            "lowlevelContext" : [
+                {
+                    "name" : "Signal_Alto",
+                    "equation" : "value",
+                    "targetValue" : "returnValue",
+                    "operation" : "EqualsTo",
+                    "resultMapping" : "True"
+                },
+                {
+                    "name" : "Signal_Turtlebot",
+                    "equation" : "value",
+                    "targetValue" : "returnValue",
+                    "operation" : "EqualsTo",
+                    "resultMapping" : "True"
+                }
+            ],
+            "highlevelContext" : [
+                {
+                    "name" : "Signal_Alto",
+                    "equation" : "returnValue == 1",
+                    "resultMapping" : {
+                        "trueValue" : "CallBtn1_Pressed",
+                        "falseValue" : "CallBtn1_None"
+                    }
+                },
+                {
+                    "name" : "Signal_Turtlebot",
+                    "equation" : "returnValue == 2",
+                    "resultMapping" : {
+                        "trueValue" : "CallBtn2_Pressed",
+                        "falseValue" : "CallBtn2_None"
+                    }
+                }
+            ]
+        },
+        "gatherValue" : {
+            "lowlevelContext" : [
+                {
+                    "name" : "Signal_Alto",
+                    "equation" : "value",
+                    "targetValue" : "1",
+                    "operator" : "EqualsTo",
+                    "resultMapping" : "CallBtn1_Pressed"
+                }
+            ],
+            "highlevelContext" : [
+                {
+                    "name" : "Signal_Alto",
+                    "equation" : "1 == 1",
+                    "resultMapping" : {
+                        "trueValue" : "CallBtn1_Pressed",
+                        "falseValue" : "CallBtn1_None"
+                    },
+                    "Result" : "CallBtn1_Pressed"
+                }
+            ]
+        }
+    }
+}

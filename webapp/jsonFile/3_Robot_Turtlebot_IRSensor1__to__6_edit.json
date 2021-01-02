@@ -1,0 +1,108 @@
+{
+    "Entity" : "Robot_Turtlebot_IRSensor1",
+    "interval" : "100ms",
+    "Description" : {
+        "access" : {
+            "currentLocation" : "TestLocation",
+            "actionEnabled" : "True",
+            "subPropertyOf" : "Things, Device",
+            "superPropertyOf" : "RobotDevice",
+            "connectionType" : "OTHERS",
+            "discoverable" : "True",
+            "targetAddr" : "PIN1",
+            "hasInterface" : "True"
+        },
+        "common" : {
+            "deviceID" : "Robot_Turtlebot_IRSensor1",
+            "productName" : "IRSensor",
+            "deviceVersion" : "1.0.0",
+            "firmwareVersion" : "1.0.0",
+            "thingsType" : "Sensor"
+        },
+        "sensor" : {
+            "sensorType" : "IRSensor",
+            "sensortivity" : "1"
+        }
+    },
+    "DataFormat" : {
+        "valueLength" : "1",
+        "type" : "simpleType",
+        "hasType" : {
+            "valueType" : [
+                {
+                    "description" : "",
+                    "name" : "",
+                    "dataType" : "Int",
+                    "valueField" : "",
+                    "valueRange" : [
+                        "1",
+                        "300"
+                    ]
+                }
+            ]
+        }
+    },
+    "Transform" : {
+        "valueType" : {
+            "collectorModel" : {
+                "Collector_ID" : "IRSensor_TEA_DELIVERY",
+                "overrideDataFormat" : "false",
+                "_type" : "simpleType",
+                "length" : "1"
+            },
+            "hasType" : {
+                "valueType" : [
+                    {
+                        "description" : "",
+                        "name" : "",
+                        "dataType" : "Int",
+                        "valueField" : "",
+                        "valueRange" : [
+                            "1",
+                            "300"
+                        ]
+                    }
+                ]
+            }
+        },
+        "basisValue" : {
+            "convertingModel" : {
+                "converting_ID" : "IRSensor_TEA_DELIVERY",
+                "overrideDataFormat" : "false",
+                "type" : "value",
+                "length" : "1"
+            },
+            "hasType" : {
+                "valueType" : [
+                    {
+                        "description" : "",
+                        "name" : "",
+                        "dataType" : "Int",
+                        "valueField" : "",
+                        "valueRange" : [
+                            "1",
+                            "300"
+                        ]
+                    }
+                ]
+            },
+            "lowlevelContext" : [
+            
+            ],
+            "highlevelContext" : [
+            
+            ]
+        },
+        "gatherValue" : {
+            "transformModel" : {
+                "transform_ID" : "IRSensor_TEA_DELIVERY"
+            },
+            "lowlevelContext" : [
+				
+            ],
+            "highlevelContext" : [
+                
+            ]
+        }
+    }
+}
