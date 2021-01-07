@@ -1,16 +1,5 @@
 package com.example.demoproject;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.networknt.schema.JsonSchema;
-import com.networknt.schema.JsonSchemaFactory;
-import com.networknt.schema.SpecVersion;
-import com.networknt.schema.ValidationMessage;
-import org.everit.json.schema.Schema;
-import org.everit.json.schema.ValidationException;
-import org.everit.json.schema.loader.SchemaLoader;
-import org.json.JSONObject;
-import org.json.JSONTokener;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +9,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
-import java.util.Set;
 
 
 @Controller
@@ -46,7 +34,7 @@ public class TestController {
 
 		try {
 			baseDir = System.getProperty("user.dir");
-			fileDir = "\\src\\main\\webapp\\uploadFiles\\";
+			fileDir = "\\target\\classes\\json\\";
 			filename = file_name.getOriginalFilename();
 
 			path = baseDir + fileDir + filename;
@@ -55,6 +43,7 @@ public class TestController {
 			file_name.transferTo(new File(path));
 
 			model.addAttribute("filename", filename);
+			model.addAttribute("filepath", path);
 			model.addAttribute("FileOpen", "<p style=\"color: blue\">file open</p>");
 
 		} catch (Exception e) {
@@ -68,16 +57,17 @@ public class TestController {
 	@RequestMapping(path = "/edit/save")
 	public String SavePage(Model model, HttpServletRequest request){
 		System.out.println("move the save page");
-		//model.addAttribute("filename", filename);
-		//model.addAttribute("filepath", path);
+		
+		String savePath = request.getParameter("filepath");
+		savePath = savePath.replace(".json", "(edit).json");
+		filename = savePath.replace("C:\\Users\\kyj\\Documents\\workspace-spring-tool-suite-4-4.8.1.RELEASE\\demoproject_5\\target\\classes\\json\\", "");
 
-		path = path.replace(".json", "(edit).json");
 		String content = request.getParameter("Document");
 
 		PrintWriter pw = null;
 
 		try{
-			pw = new PrintWriter(path);
+			pw = new PrintWriter(savePath);
 			pw.printf(content);
 
 			System.out.println("file save");
@@ -88,71 +78,32 @@ public class TestController {
 		}
 		pw.close();
 
+		model.addAttribute("filename", filename);
+		model.addAttribute("filepath", savePath);
+
 		return "Edit_page";
 	}
-
-/*
-	private static InputStream inputStreamFromClasspath(String path) {
-		return Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
-	}
-*/
 	
 	@RequestMapping(path = "/edit/check")
 	public String CheckPage(Model model, HttpServletRequest request){
-/*
-		String schema_path = request.getParameter("schemapath");
-		//System.out.println(schema_path);
+		
+		String savePath = request.getParameter("filepath");
+		filename = savePath.replace("C:\\Users\\kyj\\Documents\\workspace-spring-tool-suite-4-4.8.1.RELEASE\\demoproject_5\\target\\classes\\json\\", "");
 
-		ObjectMapper objectMapper = new ObjectMapper();
-		JsonSchemaFactory schemaFactory = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V201909);
 
-		try {
-			System.out.println(path);
-			System.out.println(schema_path);
+		Parser ps = new Parser();
+		String mesage = ps.Parsing(filename);
 
-			InputStream jsonStream = inputStreamFromClasspath("1_Robot_Alto_edit.json");
-			InputStream schemaStream = inputStreamFromClasspath("schema.json");
+		model.addAttribute("filename", filename);
+		model.addAttribute("filepath", savePath);
 
-			JsonNode json = objectMapper.readTree(jsonStream);
-			JsonSchema schema = schemaFactory.getSchema(schemaStream);
-
-			Set<ValidationMessage> validationResult = schema.validate(json);
-
-			// print validation errors
-			if (validationResult.isEmpty()) {
-				model.addAttribute("Check_Success", "<p style=\"color: blue\">no validation errors :-)<a href=\"\\index\">index link</a></p>");
-			} else {
-				validationResult.forEach(vm -> model.addAttribute("Check_Massage", "<p style=\"color: red\">"+vm.getMessage()+"<a href=\"\\index\">index link</a></p>"));
-			}
-		}catch(FileNotFoundException fnfe){
-			System.out.println("Not Found File");
-		}catch(IOException e){
-			System.out.println("Error");
+		if(mesage == "success"){
+			model.addAttribute("Check_Success", "<p style=\"color: blue\">no validation errors :-)</p>");
 		}
-*/
-
-		String schema_path = request.getParameter("schemapath");
-		System.out.println(schema_path);
-
-		String schema_contents = request.getParameter("Document");
-		System.out.println(schema_contents);
-
-
-		try (InputStream inputStream = getClass().getResourceAsStream(schema_path)) {
-			JSONObject rawSchema = new JSONObject(new JSONTokener(inputStream));
-			Schema schema = SchemaLoader.load(rawSchema);
-			schema.validate(new JSONObject(schema_contents)); // throws a ValidationException if this object is invalid
-		} catch (ValidationException e) {
-			System.out.println(e.getMessage());
-			e.getCausingExceptions().stream()
-					.map(ValidationException::getMessage)
-					.forEach(System.out::println);
-		} catch (IOException e){
-			System.out.println(e.getMessage());
+		else{
+			model.addAttribute("Check_Success", "<p style=\"color: red\">"+mesage+"</p>");
 		}
 
-
-
-		return "test1";
+		return "Edit_page";
 	}
 }
