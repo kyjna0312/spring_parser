@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Set;
 
-public class Main {
+public class Parser {
 
 	private static InputStream inputStreamFromClasspath(String path) {
 		System.out.println(path);
@@ -18,34 +18,41 @@ public class Main {
 	    return Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
 	}
 
-	public static void main(String[] args) throws Exception {
+	public static String Parsing(String filename) {
 	    ObjectMapper objectMapper = new ObjectMapper();
 	    JsonSchemaFactory schemaFactory = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V201909);
-	
+	    String message = null;
+	    Parsing_Message pms = new Parsing_Message();
+
 	    try(
-				InputStream jsonStream = inputStreamFromClasspath("1_Robot_Alto_edit.json");
+				InputStream jsonStream = inputStreamFromClasspath("json/" + filename);
 				InputStream schemaStream = inputStreamFromClasspath("schema.json")
 		){
-	        System.out.println(jsonStream);
 
 	    	JsonNode json = objectMapper.readTree(jsonStream);
 	        JsonSchema schema = schemaFactory.getSchema(schemaStream);
 
-			System.out.println(json);
-			System.out.println(schema);
 
 	        Set<ValidationMessage> validationResult = schema.validate(json);
 	
 	        // print validation errors
 	        if (validationResult.isEmpty()) {
-	            System.out.println("no validation errors :-)");
+	        	//System.out.println("no validation errors :-)");
+				pms.set_Message("success");
 	        } else {
-	            validationResult.forEach(vm -> System.out.println(vm.getMessage()));
+	            validationResult.forEach(
+	            		vm -> {
+	            			//System.out.println(vm.getMessage());
+	            			pms.set_Message(vm.getMessage());
+	            		}
+				);
 	        }
 	    }catch(FileNotFoundException fnfe){
 
 		}catch(IOException e){
 
 		}
+
+	    return pms.get_Message();
 	}
 }
