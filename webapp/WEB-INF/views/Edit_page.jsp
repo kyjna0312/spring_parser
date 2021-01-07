@@ -2,6 +2,7 @@
 <%@ page import="java.io.FileReader" %>
 <%@ page import="java.io.FileNotFoundException" %>
 <%@ page import="java.io.IOException" %>
+<%@ page import="java.util.concurrent.TimeUnit" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
@@ -90,36 +91,32 @@
                 <form method="post" enctype="multipart/form-data">
                     <div>
                         <h3>Document Edit</h3>
-                        <p class="filename"><%
+                        <p class="filename" title="Click to open a folder" href="file:///D:/"><%
                             String fileName = (String)request.getAttribute("filename");
                             out.println(fileName);
                         %></p>
+                        <input type="text" value="<%
+                            String Document_filePath = (String)request.getAttribute("filepath");
+                            out.println(Document_filePath);
+                        %>" name="filepath" style="display: none">
 
                     </div>
 
                     <textarea class="Document" name="Document"><%
                         BufferedReader reader = null;
-                        String filePath = application.getRealPath("uploadFiles/"+fileName);
 
-                        try{
-                            reader = new BufferedReader(new FileReader(filePath));
-                            while (true){
-                                String str = reader.readLine();
-                                if(str==null){
+                        try (BufferedReader Document_reader = new BufferedReader(new FileReader(Document_filePath))) {
+                            while (true) {
+                                String str = Document_reader.readLine();
+                                if (str == null) {
                                     break;
                                 }
                                 out.println(str);
                             }
-                        }catch(FileNotFoundException fnfe){
+                        } catch (FileNotFoundException fnfe) {
                             out.println("파일을 찾을 수 없습니다!");
-                        }catch (IOException ioe){
+                        } catch (IOException ioe) {
                             out.println("파일을 읽을 수 없습니다!");
-                        }
-                        finally {
-                            try{
-                                reader.close();
-                            }catch (Exception e){
-                            }
                         }
                     %></textarea>
                     <input type="submit" class="btn btn-primary" value="저장" formaction="/edit/save">
@@ -129,8 +126,15 @@
                         <h3>Schema</h3>
                         <p>schema.json</p>
                         <input type="text" value="<%
-                            String Schema_filePath = application.getRealPath("jsonFile/schema.json");
+                            //String Schema_filePath = application.getRealPath("jsonFile/schema.json");
+                            //out.println(Schema_filePath);
+
+                            String schema_fileDir = "\\target\\classes\\";
+                            String Schema_name = "schema.json";
+                            String Schema_filePath = System.getProperty("user.dir") + schema_fileDir + Schema_name;
+
                             out.println(Schema_filePath);
+
                         %>" name="schemapath" style="display: none">
                     </div>
 
